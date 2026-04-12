@@ -1,5 +1,6 @@
 package dev.pedro.foodflow_api.services;
 
+import dev.pedro.foodflow_api.dto.CategoryRequestDTO;
 import dev.pedro.foodflow_api.dto.CategoryResponseDTO;
 import dev.pedro.foodflow_api.entities.Category;
 import dev.pedro.foodflow_api.mappers.CategoryMapper;
@@ -19,8 +20,8 @@ public class CategoryService {
         this.categoryMapper = categoryMapper;
     }
 
-    public CategoryResponseDTO createCategory(String name) {
-        var category = Category.builder().name(name).build();
+    public CategoryResponseDTO createCategory(CategoryRequestDTO categoryRequest) {
+        var category = Category.builder().name(categoryRequest.name()).build();
         var savedCategory = categoryRepository.save(category);
         return categoryMapper.toDTO(savedCategory);
     }
