@@ -1,11 +1,19 @@
 package dev.pedro.foodflow_api.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "order_items")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Builder
 public class OrderItem {
 
     @Id
