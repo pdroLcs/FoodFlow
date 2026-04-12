@@ -1,4 +1,6 @@
 package dev.pedro.foodflow_api.dto;
 
-public record CategoryRequestDTO(String name) {
+import jakarta.validation.constraints.NotNull;
+
+public record CategoryRequestDTO(@NotNull String name) {
 }
