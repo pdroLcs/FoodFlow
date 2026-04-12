@@ -9,7 +9,6 @@ public record ProductRequestDTO(
         String description,
         BigDecimal price,
         String imageUrl,
-        boolean active,
         Category category
 ) {
 }
