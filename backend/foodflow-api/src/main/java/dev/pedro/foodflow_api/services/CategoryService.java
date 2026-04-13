@@ -1,7 +1,7 @@
 package dev.pedro.foodflow_api.services;
 
-import dev.pedro.foodflow_api.dto.CategoryRequestDTO;
-import dev.pedro.foodflow_api.dto.CategoryResponseDTO;
+import dev.pedro.foodflow_api.dto.category.CategoryRequestDTO;
+import dev.pedro.foodflow_api.dto.category.CategoryResponseDTO;
 import dev.pedro.foodflow_api.entities.Category;
 import dev.pedro.foodflow_api.mappers.CategoryMapper;
 import dev.pedro.foodflow_api.repositories.CategoryRepository;

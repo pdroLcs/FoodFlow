@@ -1,7 +1,7 @@
 package dev.pedro.foodflow_api.controllers;
 
-import dev.pedro.foodflow_api.dto.CategoryRequestDTO;
-import dev.pedro.foodflow_api.dto.CategoryResponseDTO;
+import dev.pedro.foodflow_api.dto.category.CategoryRequestDTO;
+import dev.pedro.foodflow_api.dto.category.CategoryResponseDTO;
 import dev.pedro.foodflow_api.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,8 +1,8 @@
 package dev.pedro.foodflow_api.controllers;
 
-import dev.pedro.foodflow_api.dto.ProductCreateDTO;
-import dev.pedro.foodflow_api.dto.ProductUpdateDTO;
-import dev.pedro.foodflow_api.dto.ProductResponseDTO;
+import dev.pedro.foodflow_api.dto.product.ProductCreateDTO;
+import dev.pedro.foodflow_api.dto.product.ProductUpdateDTO;
+import dev.pedro.foodflow_api.dto.product.ProductResponseDTO;
 import dev.pedro.foodflow_api.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

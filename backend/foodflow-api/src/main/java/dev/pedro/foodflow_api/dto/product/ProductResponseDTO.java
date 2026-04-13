@@ -1,4 +1,6 @@
-package dev.pedro.foodflow_api.dto;
+package dev.pedro.foodflow_api.dto.product;
+
+import dev.pedro.foodflow_api.dto.category.CategoryResponseDTO;
 
 import java.math.BigDecimal;
 

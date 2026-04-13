@@ -1,4 +1,4 @@
-package dev.pedro.foodflow_api.dto;
+package dev.pedro.foodflow_api.dto.category;
 
 import jakarta.validation.constraints.NotNull;
 

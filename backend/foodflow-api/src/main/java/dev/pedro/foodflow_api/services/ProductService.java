@@ -1,8 +1,8 @@
 package dev.pedro.foodflow_api.services;
 
-import dev.pedro.foodflow_api.dto.ProductCreateDTO;
-import dev.pedro.foodflow_api.dto.ProductUpdateDTO;
-import dev.pedro.foodflow_api.dto.ProductResponseDTO;
+import dev.pedro.foodflow_api.dto.product.ProductCreateDTO;
+import dev.pedro.foodflow_api.dto.product.ProductUpdateDTO;
+import dev.pedro.foodflow_api.dto.product.ProductResponseDTO;
 import dev.pedro.foodflow_api.entities.Product;
 import dev.pedro.foodflow_api.mappers.ProductMapper;
 import dev.pedro.foodflow_api.repositories.CategoryRepository;
@@ -45,7 +45,6 @@ public class ProductService {
     }
 
     public List<ProductResponseDTO> listProducts(Long categoryId) {
-//        return productRepository.findAll().stream().filter(Product::isActive).map(productMapper::toDTO).toList();
         List<Product> products = categoryId == null ? productRepository.findAll() : productRepository.findByCategoryId(categoryId);
         return products.stream().map(productMapper::toDTO).toList();
     }

@@ -1,7 +1,7 @@
 package dev.pedro.foodflow_api.controllers;
 
-import dev.pedro.foodflow_api.dto.OrderRequestDTO;
-import dev.pedro.foodflow_api.dto.OrderResponseDTO;
+import dev.pedro.foodflow_api.dto.order.OrderRequestDTO;
+import dev.pedro.foodflow_api.dto.order.OrderResponseDTO;
 import dev.pedro.foodflow_api.entities.OrderStatus;
 import dev.pedro.foodflow_api.services.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
