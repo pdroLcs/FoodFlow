@@ -3,6 +3,8 @@ package dev.pedro.foodflow_api.controllers;
 import dev.pedro.foodflow_api.dto.CategoryRequestDTO;
 import dev.pedro.foodflow_api.dto.CategoryResponseDTO;
 import dev.pedro.foodflow_api.services.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
+@Tag(name = "Categorias", description = "Endpoints para listagem e criação de categorias")
 @RestController
 @RequestMapping("/categorias")
 public class CategoryController {
@@ -21,11 +24,13 @@ public class CategoryController {
     }
 
     @GetMapping
+    @Operation(summary = "Retorna todas as categorias cadastradas no banco")
     public ResponseEntity<List<CategoryResponseDTO>> listCategories() {
         return ResponseEntity.ok(categoryService.listCategories());
     }
 
     @PostMapping
+    @Operation(summary = "Cria uma nova categoria e salva no banco")
     public ResponseEntity<CategoryResponseDTO> createCategory(@RequestBody @Valid CategoryRequestDTO categoryRequest) {
         var categoryCreated = categoryService.createCategory(categoryRequest);
         var uri = URI.create("/categorias/" + categoryCreated.id());
