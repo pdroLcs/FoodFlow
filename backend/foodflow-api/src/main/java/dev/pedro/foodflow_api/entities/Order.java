@@ -51,9 +51,13 @@ public class Order {
 
     public void calculateTotal() {
         totalValue = items.stream()
-                .map(item -> item.getUnitPrice()
-                        .multiply(BigDecimal.valueOf(item.getQuantity())))
+                .map(OrderItem::getTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public void updateStatus(OrderStatus newStatus) {
+        if (!this.status.canGoTo(newStatus)) throw new RuntimeException("Transição inválida de " + this.status + " para " + newStatus);
+        this.status = newStatus;
     }
 
 }
