@@ -23,8 +23,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductResponseDTO>> listProducts() {
-        return ResponseEntity.ok(productService.listProducts());
+    public ResponseEntity<List<ProductResponseDTO>> listProducts(@RequestParam(required = false) Long categoryId) {
+        return ResponseEntity.ok(productService.listProducts(categoryId));
     }
 
     @GetMapping("/{id}")

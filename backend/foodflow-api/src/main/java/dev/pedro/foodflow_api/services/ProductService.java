@@ -44,8 +44,10 @@ public class ProductService {
         return productMapper.toDTO(productSaved);
     }
 
-    public List<ProductResponseDTO> listProducts() {
-        return productRepository.findAll().stream().filter(Product::isActive).map(productMapper::toDTO).toList();
+    public List<ProductResponseDTO> listProducts(Long categoryId) {
+//        return productRepository.findAll().stream().filter(Product::isActive).map(productMapper::toDTO).toList();
+        List<Product> products = categoryId == null ? productRepository.findAll() : productRepository.findByCategoryId(categoryId);
+        return products.stream().map(productMapper::toDTO).toList();
     }
 
     public ProductResponseDTO getProduct(Long id) {
