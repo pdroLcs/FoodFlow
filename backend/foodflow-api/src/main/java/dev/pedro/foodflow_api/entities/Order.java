@@ -39,6 +39,10 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "table_id")
+    private RestaurantTable table;
+
     @PrePersist
     public void prePersist() {
         this.creationDate = LocalDateTime.now();
