@@ -10,6 +10,7 @@ public record OrderResponseDTO(
         Long id,
         OrderStatus status,
         BigDecimal totalValue,
+        Integer tableNumber,
         LocalDateTime creationDate,
         List<OrderItemResponseDTO> items
 ) {
