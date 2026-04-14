@@ -8,6 +8,7 @@ import dev.pedro.foodflow_api.entities.OrderStatus;
 import dev.pedro.foodflow_api.mappers.OrderMapper;
 import dev.pedro.foodflow_api.repositories.OrderRepository;
 import dev.pedro.foodflow_api.repositories.ProductRepository;
+import dev.pedro.foodflow_api.repositories.RestaurantTableRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,16 +18,24 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+    private final RestaurantTableRepository restaurantTableRepository;
     private final OrderMapper orderMapper;
 
-    public OrderService(OrderRepository orderRepository, ProductRepository productRepository, OrderMapper orderMapper) {
+    public OrderService(OrderRepository orderRepository, ProductRepository productRepository, RestaurantTableRepository restaurantTableRepository, OrderMapper orderMapper) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
+        this.restaurantTableRepository = restaurantTableRepository;
         this.orderMapper = orderMapper;
     }
 
     public OrderResponseDTO createOrder(OrderRequestDTO orderRequest) {
-        var order = Order.builder().build();
+        var table = restaurantTableRepository.findById(orderRequest.tableId()).orElseThrow(() -> new RuntimeException("Mesa não encontrada"));
+
+        if (table.isFree()) table.setFree(false);
+
+        var order = Order.builder()
+                .table(table)
+                .build();
 
         orderRequest.items().forEach(orderItem -> {
             var product = productRepository.findById(orderItem.productId()).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
