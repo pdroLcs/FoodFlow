@@ -22,8 +22,9 @@ public class RestaurantTable {
     @Column(nullable = false)
     private Integer number;
 
+    @Builder.Default
     @Column(nullable = false)
-    private boolean free;
+    private boolean free = true;
 
     @Builder.Default
     @OneToMany(mappedBy = "table")
