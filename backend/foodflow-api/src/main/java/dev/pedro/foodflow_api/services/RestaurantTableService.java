@@ -4,6 +4,7 @@ import dev.pedro.foodflow_api.dto.restauranttable.RestaurantTableRequestDTO;
 import dev.pedro.foodflow_api.dto.restauranttable.RestaurantTableResponseDTO;
 import dev.pedro.foodflow_api.dto.restauranttable.RestaurantTableUpdateDTO;
 import dev.pedro.foodflow_api.entities.RestaurantTable;
+import dev.pedro.foodflow_api.exceptions.RestaurantTableNotFoundException;
 import dev.pedro.foodflow_api.mappers.RestaurantTableMapper;
 import dev.pedro.foodflow_api.repositories.RestaurantTableRepository;
 import dev.pedro.foodflow_api.services.qrcode.QRCodeService;
@@ -38,22 +39,22 @@ public class RestaurantTableService {
 
     public RestaurantTableResponseDTO getTableById(Long id) {
         return restaurantTableMapper.toDTO(restaurantTableRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Mesa não encontrada")));
+                .orElseThrow(RestaurantTableNotFoundException::new));
     }
 
     public RestaurantTableResponseDTO getTableByNumber(Integer number) {
         return restaurantTableMapper.toDTO(restaurantTableRepository.findByNumber(number)
-                .orElseThrow(() -> new RuntimeException("Mesa não encontrada")));
+                .orElseThrow(RestaurantTableNotFoundException::new));
     }
 
     public RestaurantTableResponseDTO getTableByPublicId(UUID publicId) {
         return restaurantTableMapper.toDTO(restaurantTableRepository.findByPublicId(publicId)
-                .orElseThrow(() -> new RuntimeException("Mesa não encontrada")));
+                .orElseThrow(RestaurantTableNotFoundException::new));
     }
 
     public RestaurantTableResponseDTO updateTableFree(Long id, RestaurantTableUpdateDTO newStatus) {
         var restaurantTable = restaurantTableRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Mesa não encontrada"));
+                .orElseThrow(RestaurantTableNotFoundException::new);
         restaurantTable.setFree(newStatus.free());
         restaurantTableRepository.save(restaurantTable);
         return restaurantTableMapper.toDTO(restaurantTable);
@@ -61,12 +62,12 @@ public class RestaurantTableService {
 
     public RestaurantTable getEntityTableById(Long id) {
         return restaurantTableRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Mesa não encontrada"));
+                .orElseThrow(RestaurantTableNotFoundException::new);
     }
 
     public void deleteTable(Long id) {
         restaurantTableRepository.delete(restaurantTableRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Mesa não encontrada")));
+                .orElseThrow(RestaurantTableNotFoundException::new));
 
     }
 

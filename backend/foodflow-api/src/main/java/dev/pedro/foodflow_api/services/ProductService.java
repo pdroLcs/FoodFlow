@@ -4,6 +4,9 @@ import dev.pedro.foodflow_api.dto.product.ProductCreateDTO;
 import dev.pedro.foodflow_api.dto.product.ProductUpdateDTO;
 import dev.pedro.foodflow_api.dto.product.ProductResponseDTO;
 import dev.pedro.foodflow_api.entities.Product;
+import dev.pedro.foodflow_api.exceptions.CategoryNotFoundException;
+import dev.pedro.foodflow_api.exceptions.ProductDeactivatedException;
+import dev.pedro.foodflow_api.exceptions.ProductNotFoundException;
 import dev.pedro.foodflow_api.mappers.ProductMapper;
 import dev.pedro.foodflow_api.repositories.CategoryRepository;
 import dev.pedro.foodflow_api.repositories.ProductRepository;
@@ -29,7 +32,7 @@ public class ProductService {
     }
 
     public ProductResponseDTO createProduct(ProductCreateDTO productRequest, MultipartFile image) {
-        var category = categoryRepository.findById(productRequest.categoryId()).orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+        var category = categoryRepository.findById(productRequest.categoryId()).orElseThrow(ProductNotFoundException::new);
 
         String imageUrl = storageService.upload(image);
 
@@ -50,19 +53,19 @@ public class ProductService {
     }
 
     public ProductResponseDTO getProduct(Long id) {
-        var product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
-        if (!product.isActive()) throw new RuntimeException("O produto está desativado");
+        var product = productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
+        if (!product.isActive()) throw new ProductDeactivatedException();
         return productMapper.toDTO(product);
     }
 
     public ProductResponseDTO updateProduct(Long id, ProductUpdateDTO productUpdate, MultipartFile image) {
-        var product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        var product = productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
 
         if (productUpdate.name() != null) product.updateName(productUpdate.name());
         if (productUpdate.description() != null) product.updateDescription(productUpdate.description());
         if (productUpdate.price() != null) product.updatePrice(productUpdate.price());
         if (productUpdate.categoryId() != null) {
-            var category = categoryRepository.findById(productUpdate.categoryId()).orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+            var category = categoryRepository.findById(productUpdate.categoryId()).orElseThrow(CategoryNotFoundException::new);
             product.updateCategory(category);
         }
         if (image != null && !image.isEmpty()) {
@@ -73,14 +76,14 @@ public class ProductService {
     }
 
     public ProductResponseDTO deactivateProduct(Long id) {
-        var product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        var product = productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
         product.deactivate();
         var productSaved = productRepository.save(product);
         return productMapper.toDTO(productSaved);
     }
 
     public ProductResponseDTO activateProduct(Long id) {
-        var product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+        var product = productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
         product.activate();
         var productSaved = productRepository.save(product);
         return productMapper.toDTO(productSaved);

@@ -5,6 +5,9 @@ import dev.pedro.foodflow_api.dto.order.OrderResponseDTO;
 import dev.pedro.foodflow_api.entities.Order;
 import dev.pedro.foodflow_api.entities.OrderItem;
 import dev.pedro.foodflow_api.entities.OrderStatus;
+import dev.pedro.foodflow_api.exceptions.OrderNotFoundException;
+import dev.pedro.foodflow_api.exceptions.ProductNotFoundException;
+import dev.pedro.foodflow_api.exceptions.RestaurantTableNotFoundException;
 import dev.pedro.foodflow_api.mappers.OrderMapper;
 import dev.pedro.foodflow_api.repositories.OrderRepository;
 import dev.pedro.foodflow_api.repositories.ProductRepository;
@@ -29,7 +32,7 @@ public class OrderService {
     }
 
     public OrderResponseDTO createOrder(OrderRequestDTO orderRequest) {
-        var table = restaurantTableRepository.findById(orderRequest.tableId()).orElseThrow(() -> new RuntimeException("Mesa não encontrada"));
+        var table = restaurantTableRepository.findById(orderRequest.tableId()).orElseThrow(RestaurantTableNotFoundException::new);
 
         if (table.isFree()) table.setFree(false);
 
@@ -38,7 +41,7 @@ public class OrderService {
                 .build();
 
         orderRequest.items().forEach(orderItem -> {
-            var product = productRepository.findById(orderItem.productId()).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+            var product = productRepository.findById(orderItem.productId()).orElseThrow(ProductNotFoundException::new);
             var item = OrderItem.builder()
                     .product(product)
                     .quantity(orderItem.quantity())
@@ -56,11 +59,11 @@ public class OrderService {
     }
 
     public OrderResponseDTO getOrder(Long id) {
-        return orderMapper.toDTO(orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado")));
+        return orderMapper.toDTO(orderRepository.findById(id).orElseThrow(OrderNotFoundException::new));
     }
 
     public OrderResponseDTO updateStatus(Long id, OrderStatus newStatus) {
-        var order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+        var order = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
         order.updateStatus(newStatus);
         return orderMapper.toDTO(orderRepository.save(order));
     }
