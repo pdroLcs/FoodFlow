@@ -1,5 +1,6 @@
 package dev.pedro.foodflow_api.dto.order;
 
+import dev.pedro.foodflow_api.dto.restauranttable.RestaurantTableResponseDTO;
 import dev.pedro.foodflow_api.entities.OrderStatus;
 
 import java.math.BigDecimal;
@@ -10,7 +11,7 @@ public record OrderResponseDTO(
         Long id,
         OrderStatus status,
         BigDecimal totalValue,
-        Integer tableNumber,
+        RestaurantTableResponseDTO table,
         LocalDateTime creationDate,
         List<OrderItemResponseDTO> items
 ) {
