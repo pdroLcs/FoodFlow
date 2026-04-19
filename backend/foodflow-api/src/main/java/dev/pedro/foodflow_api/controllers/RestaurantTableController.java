@@ -6,6 +6,7 @@ import dev.pedro.foodflow_api.dto.restauranttable.RestaurantTableUpdateDTO;
 import dev.pedro.foodflow_api.mappers.RestaurantTableMapper;
 import dev.pedro.foodflow_api.services.RestaurantTableService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.core.io.Resource;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Tag(name = "mesas", description = "Endpoints responsáveis pelo gerenciamento das mesas do restaurante")
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/mesas")
 public class RestaurantTableController {

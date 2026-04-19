@@ -5,6 +5,7 @@ import dev.pedro.foodflow_api.dto.product.ProductUpdateDTO;
 import dev.pedro.foodflow_api.dto.product.ProductResponseDTO;
 import dev.pedro.foodflow_api.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.net.URI;
 import java.util.List;
 
 @Tag(name = "Produtos", description = "Endpoints para gerenciamento dos produtos")
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/produtos")
 public class ProductController {
