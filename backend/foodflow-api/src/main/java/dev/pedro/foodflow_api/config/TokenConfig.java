@@ -21,7 +21,7 @@ public class TokenConfig {
         return JWT.create()
                 .withClaim("user_id", user.getId())
                 .withSubject(user.getEmail())
-                .withExpiresAt(Instant.now().plusSeconds(86400))
+                .withExpiresAt(Instant.now().plusSeconds(3600))
                 .withIssuedAt(Instant.now())
                 .sign(Algorithm.HMAC256(secret));
     }
