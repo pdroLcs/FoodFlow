@@ -1,6 +1,7 @@
 package dev.pedro.foodflow_api.controllers;
 
 import dev.pedro.foodflow_api.dto.product.ProductCreateDTO;
+import dev.pedro.foodflow_api.dto.product.ProductDetailsDTO;
 import dev.pedro.foodflow_api.dto.product.ProductUpdateDTO;
 import dev.pedro.foodflow_api.dto.product.ProductResponseDTO;
 import dev.pedro.foodflow_api.services.ProductService;
@@ -31,6 +32,12 @@ public class ProductController {
     @Operation(summary = "Retorna todos os produtos ativos cadastrados, com opção de filtragem por categoria")
     public ResponseEntity<List<ProductResponseDTO>> listProducts(@RequestParam(required = false) Long categoryId) {
         return ResponseEntity.ok(productService.listProducts(categoryId));
+    }
+
+    @GetMapping("/admin")
+    @Operation(summary = "Retorna todo os produtos, ativos ou não, com opção de filtragem por categoria")
+    public ResponseEntity<List<ProductDetailsDTO>> listAllProducts(@RequestParam(required = false) Long categoryId) {
+        return ResponseEntity.ok(productService.listAllProducts(categoryId));
     }
 
     @GetMapping("/{id}")

@@ -1,6 +1,7 @@
 package dev.pedro.foodflow_api.services;
 
 import dev.pedro.foodflow_api.dto.product.ProductCreateDTO;
+import dev.pedro.foodflow_api.dto.product.ProductDetailsDTO;
 import dev.pedro.foodflow_api.dto.product.ProductUpdateDTO;
 import dev.pedro.foodflow_api.dto.product.ProductResponseDTO;
 import dev.pedro.foodflow_api.entities.Product;
@@ -53,6 +54,15 @@ public class ProductService {
                 : productRepository.findByCategoryIdAndActiveTrue(categoryId))
                 .stream()
                 .map(productMapper::toDTO)
+                .toList();
+    }
+
+    public List<ProductDetailsDTO> listAllProducts(Long categoryId) {
+        return (categoryId == null
+                ? productRepository.findAll()
+                : productRepository.findByCategoryId(categoryId))
+                .stream()
+                .map(productMapper::toDetails)
                 .toList();
     }
 
