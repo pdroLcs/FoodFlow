@@ -14,7 +14,7 @@ public class QRCodeService {
 
     public void generateForTable(RestaurantTable table) {
         try {
-            String url = "http://localhost:3000/mesas/" + table.getPublicId();
+            String url = "http://localhost:5172/mesas/" + table.getPublicId();
             String apiUrl = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + url;
 
             InputStream input = new URL(apiUrl).openStream();
