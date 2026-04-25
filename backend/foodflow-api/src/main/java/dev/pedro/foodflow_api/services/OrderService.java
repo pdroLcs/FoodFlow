@@ -32,7 +32,8 @@ public class OrderService {
     }
 
     public OrderResponseDTO createOrder(OrderRequestDTO orderRequest) {
-        var table = restaurantTableRepository.findById(orderRequest.tableId()).orElseThrow(RestaurantTableNotFoundException::new);
+        var table = restaurantTableRepository.findByPublicId(orderRequest.publicId())
+                .orElseThrow(RestaurantTableNotFoundException::new);
 
         if (table.isFree()) table.setFree(false);
 
