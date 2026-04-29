@@ -4,7 +4,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.mapstruct.ap.internal.util.Strings;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -25,7 +24,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizeHeader = request.getHeader("Authorization");
-        if (Strings.isNotEmpty(authorizeHeader) && authorizeHeader.startsWith("Bearer ")) {
+        if ((authorizeHeader != null && !authorizeHeader.isBlank())  && authorizeHeader.startsWith("Bearer ")) {
             String token = authorizeHeader.substring("Bearer ".length());
             Optional<JwtUserData> optUser = tokenConfig.validateToken(token);
             if (optUser.isPresent()) {
