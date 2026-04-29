@@ -19,4 +19,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(new ErrorResponseDTO("BAD_REQUEST", ex.getMessage()));
     }
 
+    @ExceptionHandler(CategoryHasProductsException.class)
+    public ResponseEntity<ErrorResponseDTO> handleCategoryHasProducts(CategoryHasProductsException ex) {
+        return ResponseEntity.badRequest().body(new ErrorResponseDTO("BAD_REQUEST", ex.getMessage()));
+    }
+
 }

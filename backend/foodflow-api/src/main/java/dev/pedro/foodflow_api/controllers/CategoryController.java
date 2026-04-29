@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,5 +38,12 @@ public class CategoryController {
         var categoryCreated = categoryService.createCategory(categoryRequest);
         var uri = URI.create("/categorias/" + categoryCreated.id());
         return ResponseEntity.created(uri).body(categoryCreated);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Remove uma categoria do banco")
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+        categoryService.deleteCategory(id);
+        return ResponseEntity.noContent().build();
     }
 }
