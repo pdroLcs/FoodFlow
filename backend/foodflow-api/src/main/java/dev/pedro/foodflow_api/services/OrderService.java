@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static dev.pedro.foodflow_api.entities.OrderStatus.READY;
+
 @Service
 public class OrderService {
 
@@ -35,7 +37,7 @@ public class OrderService {
         var table = restaurantTableRepository.findByPublicId(orderRequest.publicId())
                 .orElseThrow(RestaurantTableNotFoundException::new);
 
-        if (table.isFree()) table.setFree(false);
+        if (table.isOrderPending()) table.setOrderPending(true);
 
         var order = Order.builder()
                 .table(table)
@@ -63,9 +65,10 @@ public class OrderService {
         return orderMapper.toDTO(orderRepository.findById(id).orElseThrow(OrderNotFoundException::new));
     }
 
-    public OrderResponseDTO updateStatus(Long id, OrderStatus newStatus) {
+    public OrderResponseDTO finishOrder(Long id) {
         var order = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
-        order.updateStatus(newStatus);
+        order.updateStatus(READY);
+        order.getTable().setOrderPending(false);
         return orderMapper.toDTO(orderRepository.save(order));
     }
 }

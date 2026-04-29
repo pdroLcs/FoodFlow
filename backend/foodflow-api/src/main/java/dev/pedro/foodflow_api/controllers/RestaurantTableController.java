@@ -2,7 +2,6 @@ package dev.pedro.foodflow_api.controllers;
 
 import dev.pedro.foodflow_api.dto.restauranttable.RestaurantTableRequestDTO;
 import dev.pedro.foodflow_api.dto.restauranttable.RestaurantTableResponseDTO;
-import dev.pedro.foodflow_api.dto.restauranttable.RestaurantTableUpdateDTO;
 import dev.pedro.foodflow_api.mappers.RestaurantTableMapper;
 import dev.pedro.foodflow_api.services.RestaurantTableService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,7 +10,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -72,12 +70,6 @@ public class RestaurantTableController {
         var restaurantTable = restaurantTableService.createTable(request);
         var uri = URI.create("/mesas/" + restaurantTable.id());
         return ResponseEntity.created(uri).body(restaurantTable);
-    }
-
-    @PatchMapping("/{id}")
-    @Operation(summary = "Atualiza o atributo free da mesa")
-    public ResponseEntity<RestaurantTableResponseDTO> updateRestaurantTableStatus(@PathVariable Long id, @RequestBody RestaurantTableUpdateDTO request) {
-        return ResponseEntity.ok(restaurantTableService.updateTableFree(id, request));
     }
 
     @DeleteMapping("/{id}")

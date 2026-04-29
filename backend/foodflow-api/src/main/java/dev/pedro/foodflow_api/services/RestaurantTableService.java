@@ -2,7 +2,6 @@ package dev.pedro.foodflow_api.services;
 
 import dev.pedro.foodflow_api.dto.restauranttable.RestaurantTableRequestDTO;
 import dev.pedro.foodflow_api.dto.restauranttable.RestaurantTableResponseDTO;
-import dev.pedro.foodflow_api.dto.restauranttable.RestaurantTableUpdateDTO;
 import dev.pedro.foodflow_api.entities.RestaurantTable;
 import dev.pedro.foodflow_api.exceptions.RestaurantTableNotFoundException;
 import dev.pedro.foodflow_api.mappers.RestaurantTableMapper;
@@ -50,14 +49,6 @@ public class RestaurantTableService {
     public RestaurantTableResponseDTO getTableByPublicId(UUID publicId) {
         return restaurantTableMapper.toDTO(restaurantTableRepository.findByPublicId(publicId)
                 .orElseThrow(RestaurantTableNotFoundException::new));
-    }
-
-    public RestaurantTableResponseDTO updateTableFree(Long id, RestaurantTableUpdateDTO newStatus) {
-        var restaurantTable = restaurantTableRepository.findById(id)
-                .orElseThrow(RestaurantTableNotFoundException::new);
-        restaurantTable.setFree(newStatus.free());
-        restaurantTableRepository.save(restaurantTable);
-        return restaurantTableMapper.toDTO(restaurantTable);
     }
 
     public RestaurantTable getEntityTableById(Long id) {

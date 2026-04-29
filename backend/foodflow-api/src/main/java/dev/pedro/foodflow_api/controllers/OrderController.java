@@ -46,9 +46,9 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrder(id));
     }
 
-    @PatchMapping("/{id}/status")
+    @PatchMapping("/{id}/finalizar")
     @Operation(summary = "Altera o estado do pedido e salva no banco")
-    public ResponseEntity<OrderResponseDTO> updateStatus(@PathVariable Long id, @RequestBody OrderStatus status) {
-        return ResponseEntity.ok(orderService.updateStatus(id, status));
+    public ResponseEntity<OrderResponseDTO> updateStatus(@PathVariable Long id) {
+        return ResponseEntity.ok(orderService.finishOrder(id));
     }
 }

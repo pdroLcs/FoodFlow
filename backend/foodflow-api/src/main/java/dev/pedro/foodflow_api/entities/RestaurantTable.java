@@ -28,7 +28,7 @@ public class RestaurantTable {
 
     @Builder.Default
     @Column(nullable = false)
-    private boolean free = true;
+    private boolean orderPending = false;
 
     @OneToMany(mappedBy = "table")
     private List<Order> orders = new ArrayList<>();
