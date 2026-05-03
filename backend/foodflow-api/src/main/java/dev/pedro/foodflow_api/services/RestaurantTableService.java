@@ -37,21 +37,21 @@ public class RestaurantTableService {
     }
 
     public List<RestaurantTableResponseDTO> listTables() {
-        return restaurantTableRepository.findAll().stream().map(restaurantTableMapper::toDTO).toList();
+        return restaurantTableRepository.findAll().stream().map(this::toDTOWithOccupied).toList();
     }
 
     public RestaurantTableResponseDTO getTableById(Long id) {
-        return restaurantTableMapper.toDTO(restaurantTableRepository.findById(id)
+        return toDTOWithOccupied(restaurantTableRepository.findById(id)
                 .orElseThrow(RestaurantTableNotFoundException::new));
     }
 
     public RestaurantTableResponseDTO getTableByNumber(Integer number) {
-        return restaurantTableMapper.toDTO(restaurantTableRepository.findByNumber(number)
+        return toDTOWithOccupied(restaurantTableRepository.findByNumber(number)
                 .orElseThrow(RestaurantTableNotFoundException::new));
     }
 
     public RestaurantTableResponseDTO getTableByPublicId(UUID publicId) {
-        return restaurantTableMapper.toDTO(restaurantTableRepository.findByPublicId(publicId)
+        return toDTOWithOccupied(restaurantTableRepository.findByPublicId(publicId)
                 .orElseThrow(RestaurantTableNotFoundException::new));
     }
 
@@ -68,6 +68,12 @@ public class RestaurantTableService {
 
     public boolean isTableOccupied(Long tableId) {
         return orderRepository.existsByTableIdAndStatus(tableId, OrderStatus.PENDING);
+    }
+    private RestaurantTableResponseDTO toDTOWithOccupied(RestaurantTable restaurantTable) {
+        var dto = restaurantTableMapper.toDTO(restaurantTable);
+        boolean occupied = orderRepository.existsByTableIdAndStatus(restaurantTable.getId(), OrderStatus.PENDING);
+        dto.setOccupied(occupied);
+        return dto;
     }
 
 }

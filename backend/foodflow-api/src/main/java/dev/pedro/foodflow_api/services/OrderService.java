@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static dev.pedro.foodflow_api.entities.OrderStatus.PENDING;
 import static dev.pedro.foodflow_api.entities.OrderStatus.READY;
 
 @Service
@@ -59,7 +60,12 @@ public class OrderService {
     }
 
     public List<OrderResponseDTO> listOrders() {
-        return orderRepository.findAll().stream().map(orderMapper::toDTO).toList();
+        return orderRepository.findAll().stream().map(order -> {
+            var dto = orderMapper.toDTO(order);
+            boolean occupied = orderRepository.existsByTableIdAndStatus(order.getTable().getId(), PENDING);
+            dto.table().setOccupied(occupied);
+            return dto;
+        }).toList();
     }
 
     public OrderResponseDTO getOrder(Long id) {
