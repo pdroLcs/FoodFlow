@@ -1,6 +1,6 @@
 ALTER TABLE orders
-DROP CONSTRAINT chk_order_status
+DROP CONSTRAINT chk_orders_status;
 
 ALTER TABLE orders
-ADD CONSTRAINT chk_order_status
-CHECK ( status IN ('PENDING', 'READY'))
+ADD CONSTRAINT chk_orders_status
+CHECK ( status IN ('PENDING', 'READY'));

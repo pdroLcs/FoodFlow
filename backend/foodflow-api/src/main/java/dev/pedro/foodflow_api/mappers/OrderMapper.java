@@ -4,9 +4,9 @@ import dev.pedro.foodflow_api.dto.order.OrderResponseDTO;
 import dev.pedro.foodflow_api.entities.Order;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = RestaurantTableMapper.class)
 public interface OrderMapper {
 
-    public OrderResponseDTO toDTO(Order order);
+    OrderResponseDTO toDTO(Order order);
 
 }

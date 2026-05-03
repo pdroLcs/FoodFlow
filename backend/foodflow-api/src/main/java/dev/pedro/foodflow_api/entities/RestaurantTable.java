@@ -26,10 +26,6 @@ public class RestaurantTable {
     @Column(nullable = false, unique = true)
     private Integer number;
 
-    @Builder.Default
-    @Column(nullable = false)
-    private boolean orderPending = false;
-
     @OneToMany(mappedBy = "table")
     private List<Order> orders = new ArrayList<>();
 

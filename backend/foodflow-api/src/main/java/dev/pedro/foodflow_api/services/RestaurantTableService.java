@@ -2,9 +2,11 @@ package dev.pedro.foodflow_api.services;
 
 import dev.pedro.foodflow_api.dto.restauranttable.RestaurantTableRequestDTO;
 import dev.pedro.foodflow_api.dto.restauranttable.RestaurantTableResponseDTO;
+import dev.pedro.foodflow_api.entities.OrderStatus;
 import dev.pedro.foodflow_api.entities.RestaurantTable;
 import dev.pedro.foodflow_api.exceptions.RestaurantTableNotFoundException;
 import dev.pedro.foodflow_api.mappers.RestaurantTableMapper;
+import dev.pedro.foodflow_api.repositories.OrderRepository;
 import dev.pedro.foodflow_api.repositories.RestaurantTableRepository;
 import dev.pedro.foodflow_api.services.qrcode.QRCodeService;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,13 @@ import java.util.UUID;
 public class RestaurantTableService {
 
     private final RestaurantTableRepository restaurantTableRepository;
+    private final OrderRepository orderRepository;
     private final RestaurantTableMapper restaurantTableMapper;
     private final QRCodeService qrCodeService;
 
-    public RestaurantTableService(RestaurantTableRepository restaurantTableRepository, RestaurantTableMapper restaurantTableMapper, QRCodeService qrCodeService) {
+    public RestaurantTableService(RestaurantTableRepository restaurantTableRepository, OrderRepository orderRepository, RestaurantTableMapper restaurantTableMapper, QRCodeService qrCodeService) {
         this.restaurantTableRepository = restaurantTableRepository;
+        this.orderRepository = orderRepository;
         this.restaurantTableMapper = restaurantTableMapper;
         this.qrCodeService = qrCodeService;
     }
@@ -60,6 +64,10 @@ public class RestaurantTableService {
         restaurantTableRepository.delete(restaurantTableRepository.findById(id)
                 .orElseThrow(RestaurantTableNotFoundException::new));
 
+    }
+
+    public boolean isTableOccupied(Long tableId) {
+        return orderRepository.existsByTableIdAndStatus(tableId, OrderStatus.PENDING);
     }
 
 }

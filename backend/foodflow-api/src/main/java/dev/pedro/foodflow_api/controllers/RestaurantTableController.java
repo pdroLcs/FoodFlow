@@ -68,7 +68,7 @@ public class RestaurantTableController {
     @Operation(summary = "Cria uma nova mesa e salva no banco")
     public ResponseEntity<RestaurantTableResponseDTO> createRestaurantTable(@RequestBody @Valid RestaurantTableRequestDTO request) {
         var restaurantTable = restaurantTableService.createTable(request);
-        var uri = URI.create("/mesas/" + restaurantTable.id());
+        var uri = URI.create("/mesas/" + restaurantTable.getId());
         return ResponseEntity.created(uri).body(restaurantTable);
     }
 

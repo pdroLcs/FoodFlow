@@ -1,0 +1,2 @@
+ALTER TABLE tables
+DROP COLUMN free;

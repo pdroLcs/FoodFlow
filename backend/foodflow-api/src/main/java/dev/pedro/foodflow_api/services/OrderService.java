@@ -37,8 +37,6 @@ public class OrderService {
         var table = restaurantTableRepository.findByPublicId(orderRequest.publicId())
                 .orElseThrow(RestaurantTableNotFoundException::new);
 
-        if (table.isOrderPending()) table.setOrderPending(true);
-
         var order = Order.builder()
                 .table(table)
                 .build();
@@ -54,7 +52,10 @@ public class OrderService {
         });
 
         order.calculateTotal();
-        return orderMapper.toDTO(orderRepository.save(order));
+        var savedOrder = orderRepository.save(order);
+        var dto = orderMapper.toDTO(savedOrder);
+        dto.table().setOccupied(true);
+        return dto;
     }
 
     public List<OrderResponseDTO> listOrders() {
@@ -68,7 +69,6 @@ public class OrderService {
     public OrderResponseDTO finishOrder(Long id) {
         var order = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
         order.updateStatus(READY);
-        order.getTable().setOrderPending(false);
         return orderMapper.toDTO(orderRepository.save(order));
     }
 }
