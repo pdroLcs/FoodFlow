@@ -1,5 +1,6 @@
 package dev.pedro.foodflow_api.services.storage;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,7 +11,8 @@ import java.nio.file.Paths;
 @Service
 public class LocalStorageService implements StorageService {
 
-    private final String uploadDir = "uploads/";
+    @Value("${storage.upload-dir}")
+    private String uploadDir;
 
     @Override
     public String upload(MultipartFile file) {
