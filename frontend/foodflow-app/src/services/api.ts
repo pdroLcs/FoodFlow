@@ -5,5 +5,6 @@ export const api = {
   getProducts: (categoryId?: number) =>
     categoryId
       ? `${BASE_API_URL}/produtos?categoryId=${categoryId}`
-      : `${BASE_API_URL}/produtos`
+      : `${BASE_API_URL}/produtos`,
+  login: () => `${BASE_API_URL}/auth/login`,
 }
