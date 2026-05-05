@@ -22,7 +22,7 @@ public class QRCodeService {
             String apiUrl = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + url;
 
             InputStream input = new URL(apiUrl).openStream();
-            var path = Paths.get(qrCodeDir + table.getPublicId() + ".png");
+            var path = Paths.get(qrCodeDir, table.getPublicId() + ".png");
             Files.createDirectories(path.getParent());
             Files.copy(input, path, StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
