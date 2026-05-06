@@ -3,8 +3,8 @@ import { useProducts } from "../../hooks/useProducts"
 
 export const Admin = () => {
 
-const { data: products, isLoading: loadingProducts } = useProducts(true)
-const { data: categories, isLoading: loadingCategories } = useCategories()
+  const { data: products, isLoading: loadingProducts } = useProducts(true)
+  const { data: categories, isLoading: loadingCategories } = useCategories()
 
   if (loadingCategories || loadingProducts) {
     return <p>Carregando...</p>;
