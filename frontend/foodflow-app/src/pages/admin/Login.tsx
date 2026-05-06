@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { api } from "../../services/api"
+import { PageTitle } from "../../components/PageTitle"
 
 export const Login = () => {
 
@@ -24,6 +25,8 @@ export const Login = () => {
 
   return (
     <div>
+      <PageTitle>Login</PageTitle>
+
       <h2>Login</h2>
 
       <input type="email" id="email" placeholder="seuemail@exemplo.com" onChange={(e) => setEmail(e.target.value)}/>

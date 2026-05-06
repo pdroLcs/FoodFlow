@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useProducts } from "../../hooks/useProducts";
 import { useState } from "react";
 import { CategoryDropdown } from "../../components/CategoryDropdown";
+import { PageTitle } from "../../components/PageTitle";
 
 export const Menu = () => {
 
@@ -22,6 +23,8 @@ export const Menu = () => {
 
   return (
     <div>
+      <PageTitle>Cardápio</PageTitle>
+
       <h1>Menu</h1>
 
       <CategoryDropdown onSelectCategory={handleSelectCategory}/>

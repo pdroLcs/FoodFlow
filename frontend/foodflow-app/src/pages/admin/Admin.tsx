@@ -1,5 +1,6 @@
 import { useCategories } from "../../hooks/useCategories"
 import { useProducts } from "../../hooks/useProducts"
+import { PageTitle } from "../../components/PageTitle"
 
 export const Admin = () => {
 
@@ -12,6 +13,8 @@ export const Admin = () => {
 
   return (
     <div>
+      <PageTitle>Página Admin</PageTitle>
+
       <h2>Painel Admin</h2>
 
       <h3>Produtos</h3>
