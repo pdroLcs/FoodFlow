@@ -1,5 +1,7 @@
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+# Regras do FoodFlow
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
+- Frontend: Next.js + TypeScript
+- Usar services para chamadas API
+- Não acessar backend direto nos componentes
+- Componentes pequenos e reutilizáveis
+- Usar Tailwind para UI
