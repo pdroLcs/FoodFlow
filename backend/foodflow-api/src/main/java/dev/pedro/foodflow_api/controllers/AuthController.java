@@ -7,6 +7,7 @@ import dev.pedro.foodflow_api.dto.user.RegisterResponseDTO;
 import dev.pedro.foodflow_api.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +29,9 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "Realiza o login do admin")
-    public ResponseEntity<LoginResponseDTO> login(@Valid @RequestBody LoginRequestDTO request) {
-        return ResponseEntity.ok(userService.login(request));
+    public ResponseEntity<Void> login(@Valid @RequestBody LoginRequestDTO request, HttpServletResponse response) {
+        response.addCookie(userService.login(request));
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/register")

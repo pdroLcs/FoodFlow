@@ -2,6 +2,7 @@ package dev.pedro.foodflow_api.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,18 +24,29 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorizeHeader = request.getHeader("Authorization");
-        if ((authorizeHeader != null && !authorizeHeader.isBlank())  && authorizeHeader.startsWith("Bearer ")) {
-            String token = authorizeHeader.substring("Bearer ".length());
-            Optional<JwtUserData> optUser = tokenConfig.validateToken(token);
-            if (optUser.isPresent()) {
-                JwtUserData userData = optUser.get();
+        String token = getTokenFromCookie(request);
+
+        if (token != null) {
+            Optional<JwtUserData> optionalUser = tokenConfig.validateToken(token);
+
+            if (optionalUser.isPresent()) {
+                JwtUserData userData = optionalUser.get();
+
                 var authentication = new UsernamePasswordAuthenticationToken(userData, null, null);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-            filterChain.doFilter(request, response);
-        } else {
-            filterChain.doFilter(request, response);
         }
+
+        filterChain.doFilter(request, response);
+    }
+
+    private String getTokenFromCookie(HttpServletRequest request) {
+        if (request.getCookies() == null ) return null;
+
+        for (Cookie cookie : request.getCookies()) {
+            if (cookie.getName().equals("token")) return cookie.getValue();
+        }
+
+        return null;
     }
 }

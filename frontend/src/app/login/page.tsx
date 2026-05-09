@@ -15,8 +15,7 @@ export default function Login() {
     e.preventDefault()
 
     try {
-      const data = await login(email, password)
-      document.cookie = `token=${data.token}; path=/`
+      await login(email, password)
       router.push("/admin")
     } catch (err) {
       console.log("Erro:", err);

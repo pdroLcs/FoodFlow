@@ -8,6 +8,7 @@ import dev.pedro.foodflow_api.dto.user.RegisterResponseDTO;
 import dev.pedro.foodflow_api.entities.User;
 import dev.pedro.foodflow_api.mappers.RegisterUserMapper;
 import dev.pedro.foodflow_api.repositories.UserRepository;
+import jakarta.servlet.http.Cookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,11 +37,16 @@ public class UserService {
         return registerUserMapper.toDTO(userRepository.save(user));
     }
 
-    public LoginResponseDTO login(LoginRequestDTO request) {
+    public Cookie login(LoginRequestDTO request) {
         var userAndPass = new UsernamePasswordAuthenticationToken(request.email(), request.password());
         Authentication authentication = authenticationManager.authenticate(userAndPass);
         User user = (User) authentication.getPrincipal();
         String token = tokenConfig.generateToken(user);
-        return new LoginResponseDTO(token);
+        var cookie = new Cookie("token", token);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 24);
+        return cookie;
     }
 }
