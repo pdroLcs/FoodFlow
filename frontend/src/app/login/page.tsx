@@ -1,5 +1,7 @@
 "use client"
 
+import { login } from "@/src/services/api";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Login() {
@@ -7,10 +9,18 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e: React.SubmitEvent) => {
+  const router = useRouter()
+
+  const handleLogin = async (e: React.SubmitEvent) => {
     e.preventDefault()
 
-    console.log("Login:", {email, password})
+    try {
+      const data = await login(email, password)
+      document.cookie = `token=${data.token}; path=/`
+      router.push("/admin")
+    } catch (err) {
+      console.log("Erro:", err);
+    }
   }
 
   return (
