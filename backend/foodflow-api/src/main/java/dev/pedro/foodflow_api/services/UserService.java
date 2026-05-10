@@ -1,5 +1,6 @@
 package dev.pedro.foodflow_api.services;
 
+import dev.pedro.foodflow_api.config.CookieConfig;
 import dev.pedro.foodflow_api.config.TokenConfig;
 import dev.pedro.foodflow_api.dto.user.LoginRequestDTO;
 import dev.pedro.foodflow_api.dto.user.LoginResponseDTO;
@@ -23,13 +24,15 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final TokenConfig tokenConfig;
+    private final CookieConfig cookieConfig;
 
-    public UserService(UserRepository userRepository, RegisterUserMapper registerUserMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenConfig tokenConfig) {
+    public UserService(UserRepository userRepository, RegisterUserMapper registerUserMapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenConfig tokenConfig, CookieConfig cookieConfig) {
         this.userRepository = userRepository;
         this.registerUserMapper = registerUserMapper;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.tokenConfig = tokenConfig;
+        this.cookieConfig = cookieConfig;
     }
 
     public RegisterResponseDTO register(RegisterRequestDTO request) {
@@ -42,11 +45,6 @@ public class UserService {
         Authentication authentication = authenticationManager.authenticate(userAndPass);
         User user = (User) authentication.getPrincipal();
         String token = tokenConfig.generateToken(user);
-        var cookie = new Cookie("token", token);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false);
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60 * 24);
-        return cookie;
+        return cookieConfig.generateCookie(token);
     }
 }
