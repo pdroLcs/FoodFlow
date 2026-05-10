@@ -5,12 +5,23 @@ import { RestaurantTable } from "../types/Table";
 const API_URL_BASE = process.env.NEXT_PUBLIC_API_URL;
 
 export const getProducts = async (): Promise<Product[]> => {
-  const res = await fetch(`${API_URL_BASE}/produtos`);
-  return res.json();
+  const res = await fetch(`${API_URL_BASE}/produtos`, {
+    credentials: "include"
+  });
+
+  console.log(res.status);
+
+  const data = res.json();
+
+  console.log(data);
+
+  return data
 };
 
 export const getCategories = async (): Promise<Category[]> => {
-  const res = await fetch(`${API_URL_BASE}/categorias`)
+  const res = await fetch(`${API_URL_BASE}/categorias`, {
+    credentials: "include"
+  })
   return res.json()
 }
 
@@ -35,4 +46,8 @@ export const login = async (email: string, password: string) => {
   })
 
   if (!res.ok) throw new Error("Login inválido")
+}
+
+export const openQrCode = (publicId: string) => {
+  window.open(`${API_URL_BASE}/mesas/public/${publicId}/qrcode`, "_blank")
 }

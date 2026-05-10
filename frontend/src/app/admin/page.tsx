@@ -1,13 +1,12 @@
-import RestaurantTableSection from "@/src/components/admin/RestaurantTableSection";
+import { Metadata } from "next";
+import AdminClient from "./AdminClient";
+
+export const metadata: Metadata = {
+  title: "Admin"
+}
 
 export default function Admin() {
   return (
-    <div>
-      <h2>Página Admin</h2>
-
-      <main>
-        <RestaurantTableSection/>
-      </main>
-    </div>
+    <AdminClient/>
   )
 }

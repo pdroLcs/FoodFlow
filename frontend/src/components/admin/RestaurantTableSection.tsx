@@ -1,6 +1,7 @@
 "use client"
 
 import useRestaurantTables from "@/src/hooks/useRestaurantTables";
+import { openQrCode } from "@/src/services/api";
 
 export default function RestaurantTableSection() {
 
@@ -16,6 +17,7 @@ export default function RestaurantTableSection() {
         <div key={restaurantTable.id}>
           <h3>Mesa #{restaurantTable.number}</h3>
           <p>{restaurantTable.occupied ? "Ocupado" : "Livre"}</p>
+          <button onClick={() => openQrCode(restaurantTable.publicId)}>QR Code</button>
         </div>
       ))}
     </div>
