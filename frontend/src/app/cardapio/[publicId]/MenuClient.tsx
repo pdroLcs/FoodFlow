@@ -15,19 +15,17 @@ export default function MenuClient() {
 
   if (loadingProducts) return <p>Carregando produtos...</p>
 
-  if (products?.length === 0) return <p>Nenhum produto disponível.</p>
-
   return (
     <div>
-
         <h2>Cardápio</h2>
 
         <h2>Categorias</h2>
 
         <CategoryFilter onSelect={handleCategoryFilter}/>
 
-        {products?.map(product => (
-          <ProductCard key={product.id} product={product}/>
+        {products?.length === 0 ? <p>Nenhum produto disponível.</p>
+          : products?.map(product => (
+            <ProductCard key={product.id} product={product}/>
         ))}
     </div>
   )
