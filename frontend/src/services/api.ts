@@ -4,8 +4,11 @@ import { RestaurantTable } from "../types/Table";
 
 const API_URL_BASE = process.env.NEXT_PUBLIC_API_URL;
 
-export const getProducts = async (): Promise<Product[]> => {
-  const res = await fetch(`${API_URL_BASE}/produtos`, {
+export const getProducts = async (categoryId?: number): Promise<Product[]> => {
+  const url = categoryId
+    ? `${API_URL_BASE}/produtos?categoryId=${categoryId}`
+    : `${API_URL_BASE}/produtos`;
+  const res = await fetch(url, {
     credentials: "include"
   });
 
