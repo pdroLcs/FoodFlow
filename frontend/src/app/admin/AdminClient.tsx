@@ -1,3 +1,4 @@
+import CategoriesSection from "@/src/components/admin/CategoriesSection";
 import ProductsSection from "@/src/components/admin/ProductsSection";
 import RestaurantTableSection from "@/src/components/admin/RestaurantTableSection";
 
@@ -7,10 +8,10 @@ export default function AdminClient() {
       <h2>Página Admin</h2>
 
       <main>
-        <h2>Produtos</h2>
-        <ProductsSection/>
+        <CategoriesSection/>
 
-        <h2>Mesas</h2>
+        <ProductsSection/>
+        
         <RestaurantTableSection/>
       </main>
     </div>

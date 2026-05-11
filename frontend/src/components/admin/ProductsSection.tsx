@@ -11,6 +11,8 @@ export default function ProductsSection() {
 
   return (
     <div>
+      <h2>Produtos</h2>
+
       {products?.map(product => (
         <div key={product.id}>
           <ProductCard product={product}>

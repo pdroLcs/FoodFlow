@@ -56,3 +56,18 @@ export const login = async (email: string, password: string) => {
 export const openQrCode = (publicId: string) => {
   window.open(`${API_URL_BASE}/mesas/public/${publicId}/qrcode`, "_blank")
 }
+
+export const createCategory = async (name: string) => {
+  const res = await fetch(`${API_URL_BASE}/categorias`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({name})
+  })
+
+  if (!res.ok) throw new Error("Erro ao criar categoria!")
+
+  return res.json()
+}

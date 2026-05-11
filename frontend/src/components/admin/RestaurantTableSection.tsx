@@ -13,6 +13,8 @@ export default function RestaurantTableSection() {
 
   return (
     <div>
+      <h2>Mesas</h2>
+
       {restaurantTables?.map(restaurantTable => (
         <div key={restaurantTable.id}>
           <h3>Mesa #{restaurantTable.number}</h3>
