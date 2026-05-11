@@ -1,15 +1,13 @@
 "use client"
 
 import ProductCard from "@/src/components/ProductCard"
-import useCategories from "@/src/hooks/useCategories"
 import useProducts from "@/src/hooks/useProducts"
 
 export default function MenuClient() {
 
   const {data: products, isLoading: loadingProducts} = useProducts()
-  const {data: categories, isLoading: loadingCategories} = useCategories()
 
-  if (loadingProducts || loadingCategories) return <p>Carregando...</p>
+  if (loadingProducts) return <p>Carregando produtos...</p>
 
   if (products?.length === 0) return <p>Nenhum produto disponível.</p>
 
@@ -19,12 +17,6 @@ export default function MenuClient() {
 
         {products?.map(product => (
           <ProductCard key={product.id} product={product}/>
-        ))}
-
-        <h2>Categorias</h2>
-
-        {categories?.map(category => (
-          <p key={category.id}>{category.name}</p>
         ))}
     </div>
   )
