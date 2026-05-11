@@ -9,14 +9,16 @@ export const getProducts = async (): Promise<Product[]> => {
     credentials: "include"
   });
 
-  console.log(res.status);
-
-  const data = res.json();
-
-  console.log(data);
-
-  return data
+  return res.json();
 };
+
+export const getProductsAdmin = async (): Promise<Product[]> => {
+  const res = await fetch(`${API_URL_BASE}/produtos/admin`, {
+    credentials: "include"
+  });
+
+  return res.json();
+}
 
 export const getCategories = async (): Promise<Category[]> => {
   const res = await fetch(`${API_URL_BASE}/categorias`, {

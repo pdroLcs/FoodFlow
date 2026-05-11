@@ -1,10 +1,11 @@
 "use client"
 
-import useProducts from "@/src/hooks/useProducts"
+import ProductCard from "../ProductCard"
+import useProductsAdmin from "@/src/hooks/useProductsAdmin"
 
 export default function ProductsSection() {
 
-  const {data: products, isLoading: loadingProducts} = useProducts()
+  const {data: products, isLoading: loadingProducts} = useProductsAdmin()
 
   if (loadingProducts) return <p>Carregando produtos...</p>
 
@@ -12,9 +13,9 @@ export default function ProductsSection() {
     <div>
       {products?.map(product => (
         <div key={product.id}>
-          <p>{product.name}</p>
-          <p>{product.category.name}</p>
-          <p>{product.active ? "Ativo" : "Inativo"}</p>
+          <ProductCard product={product}>
+            <p>{product.active ? "Ativo" : "Inativo"}</p>
+          </ProductCard>
         </div>
       ))}
     </div>
